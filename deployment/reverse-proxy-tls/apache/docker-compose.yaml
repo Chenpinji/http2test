@@ -27,4 +27,4 @@ services:
       - /home/lzy/my_repo/http2smuggler/echo_server/requirements.txt:/requirements.txt
       - /home/lzy/my_repo/http2smuggler/echo_server/test_tcpdump.py:/test_tcpdump.py
       # - /home/lzy/my_repo/http2smuggler/echo_server/sleep.py:/sleep.py
-    command: sh -c "apk update && apk add tcpdump && python3 -m pip install -r requirements.txt && python3 echo_server.py & python3 test_tcpdump.py"
+    command: sh -c "apk update && apk add tcpdump && python3 -m pip install -r requirements.txt && (python3 echo_server.py & python3 test_tcpdump.py)"
