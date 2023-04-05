@@ -2,7 +2,7 @@ import os
 import time
 import uuid
 
-time.sleep(120)
+# time.sleep(120)
 # 生成随机文件名
 filename = "/pcap/" + str(uuid.uuid4()) + ".pcap"
 
