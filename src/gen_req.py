@@ -2,7 +2,7 @@ from mutation import *
 import json
 import os
 
-def gen_header_frame(method, scheme, authority, path ,flags, id, verbose=True):
+def gen_header_frame(method, scheme, authority, path ,flags, id,verbose=True):
     # TODO: 对:authority、:method、:scheme修改
     # * 1. :method 目标URL模式部分(请求)
     # * 2. :scheme 目标URL模式部分(请求) 
@@ -10,8 +10,7 @@ def gen_header_frame(method, scheme, authority, path ,flags, id, verbose=True):
     # * 4. :path 
 
     if verbose:
-        path = "/reqid=%s" %id
-
+        path = "/?reqid=%s" %id
     #pseudo_header = {":method": method, ":scheme": scheme, ":authority": authority, ":path": path,"flags": flags}
     head_frame =  {"<headers-frame-%s>"%id: {":method": method, ":scheme": scheme, ":authority": authority, ":path": path,"flags": flags}}
     # head_frame =  {"<headers-frame>": {":method": "POST", ":scheme": "https", ":authority": "127.0.0.1", "flags": []}}
@@ -65,10 +64,31 @@ def gen_all_cl_req(cl_list):
     req_list = []
     for cl in cl_list:
         head_frame = gen_header_frame(method="POST", scheme="https", authority="127.0.0.1", path="/" ,flags=[], id=i, verbose=True)
-        continue_frame = gen_continue_frame(header_fileds=cl,flags=["EH"],id=i)
-        data_frame = gen_data_frame(data='BBBBB',flags=["ES"],id=i)
-        i+=1
-        req = gen_req(frames=[head_frame, continue_frame, data_frame])
+        continue_frame = gen_continue_frame(header_fileds=cl,flags=[],id=i)
+        continue_frame2 = gen_continue_frame(header_fileds=cl,flags=[],id=2)
+        continue_frame3 = gen_continue_frame(header_fileds=cl,flags=[],id=3)
+        continue_frame4 = gen_continue_frame(header_fileds=cl,flags=[],id=4)
+        continue_frame5 = gen_continue_frame(header_fileds=cl,flags=[],id=5)
+        continue_frame6 = gen_continue_frame(header_fileds=cl,flags=[],id=6)
+        continue_frame7 = gen_continue_frame(header_fileds=cl,flags=[],id=7)
+        continue_frame8 = gen_continue_frame(header_fileds=cl,flags=[],id=8)
+        continue_frame9 = gen_continue_frame(header_fileds=cl,flags=[],id=9)
+        continue_frame10 = gen_continue_frame(header_fileds=cl,flags=[],id=10)
+        continue_frame11 = gen_continue_frame(header_fileds=cl,flags=[],id=11)
+        continue_frame12 = gen_continue_frame(header_fileds=cl,flags=[],id=12)
+        continue_frame13 = gen_continue_frame(header_fileds=cl,flags=[],id=13)
+        continue_frame14 = gen_continue_frame(header_fileds=cl,flags=[],id=14)
+        continue_frame15 = gen_continue_frame(header_fileds=cl,flags=[],id=15)
+        continue_frame16 = gen_continue_frame(header_fileds=cl,flags=[],id=16)
+        continue_frame17 = gen_continue_frame(header_fileds=cl,flags=[],id=17)
+        continue_frame18 = gen_continue_frame(header_fileds=cl,flags=[],id=18)
+        continue_frameend = gen_continue_frame(header_fileds=cl,flags=["EH"],id=7)
+        data_frame = gen_data_frame(data='First data',flags=["ES"],id=i)
+        # head_frame2 = gen_header_frame(method="POST", scheme="https", authority="127.0.0.1", path="/" ,flags=[], id=i, verbose=True)
+        # continue_frame2 = gen_continue_frame(header_fileds=cl,flags=["EH"],id=i)
+        # data_frame2 = gen_data_frame(data='Second data',flags=["ES"],id=i)
+        req = gen_req(frames=[head_frame,continue_frame,
+                                continue_frameend,data_frame])
         req_list.append(req)
     return req_list
 
@@ -154,7 +174,7 @@ def save_mutated_data(attack_type,attack_req_list):
         i += 1
         attack_req_dict['reqid_%s' %i] = req
     # * save data in attack_data
-    file_name = "../attack_data/" + str(attack_type) + '_attack_data.json'
+    file_name = "./" + str(attack_type) + '_attack_data.json'
     with open(file_name, 'w') as f:
         json_str = json.dumps(attack_req_dict, indent=0)
         f.write(json_str)
@@ -163,7 +183,7 @@ def save_mutated_data(attack_type,attack_req_list):
 
 def check_file(check_file_name):
     # check_file_name = "cl_attack_data.json"
-    dir_path = "../attack_data"
+    dir_path = "./"
     # for file in os.listdir(dir_path):
     if check_file_name in os.listdir(dir_path):
         print("data exist")

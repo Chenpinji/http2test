@@ -26,16 +26,16 @@ class H2Client:
     
 
 
-    def chose_frames(self, file_name):
-        frames_dict = load_data(file_name=file_name)
-        frames = []
-        for anomaly_name, frame_dict in frames_dict.items():
-            # print(frame_dict)
-            for frame_name, frame_fileds in frame_dict.items():
-                frame_type = extract_type(frame_name=frame_name)
-                frame = build_frame(fileds_dict=frame_fileds, frame_type=frame_type)
-                frames.append(frame)
-        return frames
+    # def chose_frames(self, file_name):
+    #     frames_dict = load_data(file_name=file_name)
+    #     frames = []
+    #     for anomaly_name, frame_dict in frames_dict.items():
+    #         # print(frame_dict)
+    #         for frame_name, frame_fileds in frame_dict.items():
+    #             frame_type = extract_type(frame_name=frame_name)
+    #             frame = build_frame(fileds_dict=frame_fileds, frame_type=frame_type)
+    #             frames.append(frame)
+    #     return frames
     
     def gen_all_frames(self, file_name):
         frames_dict = load_data(file_name=file_name)

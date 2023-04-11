@@ -7,7 +7,7 @@ services:
       - 80:80
     volumes:
       - ./default.vcl:/etc/varnish/default.vcl:ro
-      - /home/lzy/pcap/reverse-proxy/varnish:/pcap
+      - E://tf_practice//WebSecurity//http2test//reverse_pcap//varnish:/pcap
     depends_on:
       - origin
 
@@ -19,9 +19,9 @@ services:
   origin:
     image: python:3.6.9-alpine
     volumes:
-      - /home/lzy/pcap/origin/varnish:/pcap
-      - /home/lzy/logs/varnish:/logs
-      - /home/lzy/my_repo/http2smuggler/echo_server/echo_server.py:/echo_server.py
-      - /home/lzy/my_repo/http2smuggler/echo_server/requirements.txt:/requirements.txt
-      - /home/lzy/my_repo/http2smuggler/echo_server/test_tcpdump.py:/test_tcpdump.py
+      - E://tf_practice//WebSecurity//http2test//pcap//varnish:/pcap
+      - E://tf_practice//WebSecurity//http2test//logs//varnish:/logs
+      - E://tf_practice//WebSecurity//http2test//echo_server//echo_server.py:/echo_server.py
+      - E://tf_practice//WebSecurity//http2test//echo_server//requirements.txt:/requirements.txt
+      - E://tf_practice//WebSecurity//http2test//echo_server//test_tcpdump.py:/test_tcpdump.py
     command: sh -c "apk update && apk add tcpdump && python3 -m pip install -r requirements.txt && (python3 echo_server.py & python3 test_tcpdump.py)"

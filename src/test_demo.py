@@ -34,9 +34,10 @@ def test(dn, port, attack_file_name,verbose=False):
         time.sleep(0.1)
         temp_h2client = H2Client(verbose=verbose)
         temp_h2client.send(dn=dn, port=port, frames=req)
+        # for i in range(max(temp_h2client._static_entries.keys()) + 1, max(temp_h2client._static_entries.keys()) + 1 + len(temp_h2client._dynamic_table)):
+        #     print('Header: {} Value: {}'.format(temp_h2client[i].name(), temp_h2client[i].value()))
     end_time = time.time()
     end_time_human = datetime.datetime.now()
-
     # 格式化输出时间
     print("程序结束时间为：", end_time_human.strftime("%Y-%m-%d %H:%M:%S"))
     # print("程序结束时间为：", end_time)
@@ -45,10 +46,6 @@ def test(dn, port, attack_file_name,verbose=False):
 
 if __name__ == '__main__':
 
-
-
-
-    
-    test(dn='127.0.0.1', port=443, attack_file_name='cl_attack_data.json',verbose=False)
+    test(dn='127.0.0.1', port=80, attack_file_name='cl_attack_data.json',verbose=False)
     # test(dn='127.0.0.1', port=443, attack_file_name='te_attack_data.json')
 

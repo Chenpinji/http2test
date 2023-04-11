@@ -1,6 +1,7 @@
 import scapy.contrib.http2 as h2
 import json
-
+global cnt
+cnt = 1
 # 后续补充其他类型帧
 def extract_type(frame_name):
     if frame_name.startswith('<headers-frame'):
@@ -19,6 +20,29 @@ def extract_type(frame_name):
 
 
 
+def extract_headers1(fileds_dict):
+    tblhdr = h2.HPackHdrTable()
+    dnt_name_str = h2.HPackLiteralString('content_length')
+    Padding = "1"
+    dnt_val_str = h2.HPackLiteralString(Padding)
+    dnt_name = h2.HPackHdrString(data = dnt_name_str)
+    dnt_value = h2.HPackHdrString(data = dnt_val_str)
+    dnt_hdr = h2.HPackLitHdrFldWithIncrIndexing(
+    hdr_name = dnt_name,
+    hdr_value = dnt_value
+)
+    headers_lst = []
+    for key, value in fileds_dict.items():
+        header_name = key
+        header_value = value
+        headers_lst.append(h2.HPackLitHdrFldWithoutIndexing(
+            hdr_name=h2.HPackHdrString(data=h2.HPackLiteralString(header_name)),
+            hdr_value=h2.HPackHdrString(data=h2.HPackLiteralString(header_value))
+        ))
+    headers_lst.append(dnt_hdr)
+    tblhdr.register(dnt_hdr)
+    return headers_lst
+
 def extract_headers(fileds_dict):
     headers_lst = []
     for key, value in fileds_dict.items():
@@ -28,17 +52,23 @@ def extract_headers(fileds_dict):
             hdr_name=h2.HPackHdrString(data=h2.HPackLiteralString(header_name)),
             hdr_value=h2.HPackHdrString(data=h2.HPackLiteralString(header_value))
         ))
+    
     return headers_lst
 
-
 def build_frame(fileds_dict, frame_type):
-
+    global cnt
     if frame_type == 'headers' or frame_type == 'padded-headers' or frame_type == 'priority-headers' or frame_type == 'continuation' or frame_type == 'push-promise':
         flag_values = set(fileds_dict['flags'])
         id_value = 1
         fileds_dict.pop('flags')
         if frame_type == 'headers':
-            headers_lst = extract_headers(fileds_dict)
+            if cnt == 1:
+                print("first in")
+                headers_lst = extract_headers1(fileds_dict)
+                cnt += 1
+            else:
+                print("second in here")
+                headers_lst = extract_headers(fileds_dict)
             return h2.H2Frame(flags=flag_values, stream_id=id_value) / h2.H2HeadersFrame(hdrs=headers_lst)
         elif frame_type == 'continuation':
             headers_lst = extract_headers(fileds_dict)
@@ -87,7 +117,7 @@ def build_frame(fileds_dict, frame_type):
 
 def load_data(file_name):
     # 加入文件夹
-    file_floder = "../attack_data/"
+    file_floder = "./"
     with open(file_floder+file_name,'r') as load_f:
         load_dict = json.load(load_f)
 

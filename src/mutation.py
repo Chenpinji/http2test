@@ -88,8 +88,37 @@ def gen_cl2():
     return cl2
 def gen_cl3():
     cl3 = []
-    cl3.append(["content-length","0+"])
-    cl3.append(["content-length","5"])
+    cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u00be"])
+    # cl3.append(["user-agent","test\u5b63\u0165"])
+    # cl3.append(["user-agent","test\u005c\u0166"])
+    # cl3.append(["user-agent","test\u005c\u0263"])
+    # cl3.append(["user-agent","test\u005c\u0363"])
+    # cl3.append(["user-agent","test\u005c\u0463"])
+    # cl3.append(["user-agent","test\u005c\u0563"])
+    # cl3.append(["user-agent","test\u005c\u1063"])
+    # cl3.append(["user-agent","test\u005c\u1163"])
+    # cl3.append(["user-agent","test\u005c\u1263"]) 
+    # cl3.append(["user-agent","test\u005c\u0163"])
+    # cl3.append(["user-agent","test\u005c\u0163"])
+    # cl3.append(["user-agent","test\u005c\u0163"])
+    # cl3.append(["user-agent","test\u005c\u0163"])
+    # cl3.append(["user-agent","test\u005c\u0163"])
+    # cl3.append(["user-agent","test\u005c\u0163"])
+
     return cl3
 # * Transfer-Encoding插入unicode(0x1-0x21)
 def gen_te1():
@@ -246,8 +275,8 @@ def gen_all_te():
 def gen_all_cl():
     cl = []
     cl.extend(gen_cl3())
-    cl.extend(gen_cl1())
-    cl.extend(gen_cl2())
+    # cl.extend(gen_cl1())
+    # cl.extend(gen_cl2())
 
     return cl
 if __name__ == "__main__":
