@@ -40,14 +40,17 @@ class H2Client:
     def gen_all_frames(self, file_name):
         frames_dict = load_data(file_name=file_name)
         req_list = []
+        i = 1
+        frames = []
         for anomaly_name, frame_dict in frames_dict.items():
-            frames = []
+            # frames = []
             for frame_name, frame_fileds in frame_dict.items():
                 frame_type = extract_type(frame_name=frame_name)
-                frame = build_frame(fileds_dict=frame_fileds, frame_type=frame_type)
+                frame = build_frame(fileds_dict=frame_fileds, frame_type=frame_type,stream_id=i)
                 frames.append(frame)
-            req_list.append(frames)
-        return req_list
+            # req_list.append(frames)
+            i += 2
+        return frames
     
     def tls_setup_exchange(self, dn, port, use_insecure_ciphers=False):
         # 获取信息
@@ -120,17 +123,17 @@ class H2Client:
         # SENDING MAGIC
         magic = packet.Raw(h2.H2_CLIENT_CONNECTION_PREFACE)
         # magic = h2.H2_CLIENT_CONNECTION_PREFACE
-        # if self.verbose:
-        #     print("-" * 32 + "SENDING" + "-" * 32)
-        #     magic.show()
+        if self.verbose:
+            print("-" * 32 + "SENDING" + "-" * 32)
+            magic.show()
         self.sock.send(magic)
         
         # RECEIVING
         srv_set = self.sock.recv()
         # srv_set.show()
-        # if self.verbose:
-        #     print("-" * 32 + "RECEIVING" + "-" * 32)
-        #     srv_set.show()
+        if self.verbose:
+            print("-" * 32 + "RECEIVING" + "-" * 32)
+            srv_set.show()
         srv_max_frm_sz = 1 << 14
         srv_hdr_tbl_sz = 4096
         srv_max_hdr_tbl_sz = 0
@@ -164,9 +167,9 @@ class H2Client:
             own_set,
         ]
         for frame in h2seq.frames:
-            # if self.verbose:
-            #     print("-" * 32 + "SENDING" + "-" * 32)
-            #     frame.show()
+            if self.verbose:
+                print("-" * 32 + "SENDING" + "-" * 32)
+                frame.show()
             self.sock.send(frame)
 
         # while loop for waiting until ack is received for client's settings
@@ -177,9 +180,9 @@ class H2Client:
         ):
             try:
                 new_frame = self.sock.recv()
-                # if self.verbose:
-                #     print("-" * 32 + "RECEIVING" + "-" * 32)
-                #     new_frame.show()
+                if self.verbose:
+                    print("-" * 32 + "RECEIVING" + "-" * 32)
+                    new_frame.show()
             except:
                 time.sleep(1)
                 new_frame = None
@@ -191,10 +194,10 @@ class H2Client:
             # 创建帧序列并且发送
             sequence = h2.H2Seq()
             sequence.frames = frames
-            # for frame in sequence.frames:
-            #     if self.verbose:
-            #         print("-" * 32 + "SENDING" + "-" * 32)
-            #         frame.show()
+            for frame in sequence.frames:
+                if self.verbose:
+                    print("-" * 32 + "SENDING" + "-" * 32)
+                    frame.show()
             self.sock.send(sequence)
 
         new_frame = None

@@ -1,0 +1,52 @@
+{
+"reqid_1": {
+"<headers-frame-1>": {
+":method": "POST",
+":scheme": "https",
+":authority": "127.0.0.1",
+":path": "/?reqid=1",
+"flags": []
+},
+"<continuation-frame-1>": {
+"flags": [],
+"user-agent": "test\u00be"
+},
+"<continuation-frame-7>": {
+"flags": [
+"EH"
+],
+"user-agent": "test\u00be"
+},
+"<data-frame-1>": {
+"data": "First data",
+"flags": [
+"ES"
+]
+}
+},
+"reqid_2": {
+    "<headers-frame-1>": {
+    ":method": "POST",
+    ":scheme": "https",
+    ":authority": "127.0.0.1",
+    ":path": "/?reqid=2",
+    "flags": []
+    },
+    "<continuation-frame-1>": {
+    "flags": [],
+    "user-agent": "test\u00be"
+    },
+    "<continuation-frame-7>": {
+    "flags": [
+    "EH"
+    ],
+    "user-agent": "test\u00be"
+    },
+    "<data-frame-1>": {
+    "data": "Second data",
+    "flags": [
+    "ES"
+    ]
+    }
+    }
+}

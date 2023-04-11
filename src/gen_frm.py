@@ -22,8 +22,9 @@ def extract_type(frame_name):
 
 def extract_headers1(fileds_dict):
     tblhdr = h2.HPackHdrTable()
-    dnt_name_str = h2.HPackLiteralString('content_length')
-    Padding = "1"
+    dnt_name_str = h2.HPackLiteralString('cookie')
+    Padding = "1"*4058
+
     dnt_val_str = h2.HPackLiteralString(Padding)
     dnt_name = h2.HPackHdrString(data = dnt_name_str)
     dnt_value = h2.HPackHdrString(data = dnt_val_str)
@@ -55,11 +56,11 @@ def extract_headers(fileds_dict):
     
     return headers_lst
 
-def build_frame(fileds_dict, frame_type):
+def build_frame(fileds_dict, frame_type,stream_id):
     global cnt
     if frame_type == 'headers' or frame_type == 'padded-headers' or frame_type == 'priority-headers' or frame_type == 'continuation' or frame_type == 'push-promise':
         flag_values = set(fileds_dict['flags'])
-        id_value = 1
+        id_value = stream_id
         fileds_dict.pop('flags')
         if frame_type == 'headers':
             if cnt == 1:
@@ -91,7 +92,7 @@ def build_frame(fileds_dict, frame_type):
     
     elif frame_type == 'data' or frame_type == 'padded-data':
         flag_values = set(fileds_dict['flags'])
-        id_value = 1
+        id_value = stream_id
         payload = fileds_dict['data']
         if frame_type == 'data':
             return h2.H2Frame(flags=flag_values, stream_id=id_value) / h2.H2DataFrame(data=payload)
@@ -102,7 +103,7 @@ def build_frame(fileds_dict, frame_type):
 
     elif frame_type == 'goaway':
         flag_values = set(fileds_dict['flags'])
-        id_value = 1
+        id_value = stream_id
         fileds_dict.pop('flags')
         last_stream_id_value = fileds_dict['last_stream_id']
         # 这个位置取出error还有点问题
