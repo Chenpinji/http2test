@@ -17,7 +17,7 @@
 
 
 :80 {
-        reverse_proxy / http://origin:80 
+        reverse_proxy  http://origin:80 
 }
 
 

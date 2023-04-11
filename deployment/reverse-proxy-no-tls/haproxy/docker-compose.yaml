@@ -10,7 +10,7 @@ services:
       # - 443:443
     volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
-      - /home/lzy/pcap/reverse-proxy/haproxy:/pcap
+      - E://tf_practice//WebSecurity//http2test//reverse_pcap//haproxy:/pcap
       # - /home/lzy/my_repo/http2smuggler/echo_server/test_tcpdump.py:/test_tcpdump.py
 
     depends_on:
