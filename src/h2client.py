@@ -47,6 +47,8 @@ class H2Client:
             for frame_name, frame_fileds in frame_dict.items():
                 frame_type = extract_type(frame_name=frame_name)
                 frame = build_frame(fileds_dict=frame_fileds, frame_type=frame_type,stream_id=i)
+                print("show the built frame")
+                frame.show()
                 frames.append(frame)
             # req_list.append(frames)
             i += 2
@@ -75,7 +77,7 @@ class H2Client:
         # print(f'ip_and_port{ip_and_port}')
         # ssl上下文对象
         # 选译 TLS 版本 1.2 作为通道加密协议
-        """
+        
         ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
         # 不验证证书有效性
         ssl_ctx.check_hostname = False
@@ -111,11 +113,11 @@ class H2Client:
         scapy.config.conf.debug_dissector = True
         ssl_stream_sock = supersocket.SSLStreamSocket(ssl_sock, basecls=h2.H2Frame)
         self.sock = ssl_stream_sock
-        """
-        s.connect(ip_and_port)
-        scapy.config.conf.debug_dissector = True
-        stream_sock = supersocket.StreamSocket(s, basecls=h2.H2Frame)
-        self.sock = stream_sock
+        
+        # s.connect(ip_and_port)
+        # scapy.config.conf.debug_dissector = True
+        # stream_sock = supersocket.StreamSocket(s, basecls=h2.H2Frame)
+        # self.sock = stream_sock
 
 
     # 建立http2连接
@@ -127,10 +129,10 @@ class H2Client:
             print("-" * 32 + "SENDING" + "-" * 32)
             magic.show()
         self.sock.send(magic)
-        
         # RECEIVING
         srv_set = self.sock.recv()
-        # srv_set.show()
+        print("--------------------------here------------------------")
+        srv_set.show()
         if self.verbose:
             print("-" * 32 + "RECEIVING" + "-" * 32)
             srv_set.show()
@@ -147,7 +149,8 @@ class H2Client:
                 srv_global_window = setting.value
 
         srv_max_hdr_lst_sz = 1 << 10
-
+        print("srv_hdr_tbl_sz",srv_hdr_tbl_sz)
+        print("srv_max_hdr_lst_sz", srv_max_hdr_lst_sz)
         own_set = h2.H2Frame() / h2.H2SettingsFrame()
         max_frm_sz = (1 << 24) - 1
         max_hdr_tbl_sz = (1 << 16) - 1
@@ -182,7 +185,7 @@ class H2Client:
                 new_frame = self.sock.recv()
                 if self.verbose:
                     print("-" * 32 + "RECEIVING" + "-" * 32)
-                    new_frame.show()
+                    #new_frame.show()
             except:
                 time.sleep(1)
                 new_frame = None
@@ -197,7 +200,7 @@ class H2Client:
             for frame in sequence.frames:
                 if self.verbose:
                     print("-" * 32 + "SENDING" + "-" * 32)
-                    frame.show()
+                    #frame.show()
             self.sock.send(sequence)
 
         new_frame = None

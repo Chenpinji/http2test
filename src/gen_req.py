@@ -25,10 +25,10 @@ def gen_continue_frame(header_fileds,flags,id):
     # TODO 这种用于多个header的情况目前暂时不需要拓展
     # for header_name, header_value in header_fileds.items():
     #     continue_frame["<continuation-frame-%s>"%id][header_name] = header_value
-
-    header_name = header_fileds[0]
-    header_value = header_fileds[1]
-    continue_frame["<continuation-frame-%s>"%id][header_name] = header_value
+    for header_field in header_fileds:
+        header_name = header_field[0]
+        header_value = header_field[1]
+        continue_frame["<continuation-frame-%s>"%id][header_name] = header_value
     return continue_frame
 
 
@@ -63,33 +63,35 @@ def gen_all_cl_req(cl_list):
     i = 1
     req_list = []
     for cl in cl_list:
-        head_frame = gen_header_frame(method="POST", scheme="https", authority="127.0.0.1", path="/" ,flags=[], id=i, verbose=True)
-        continue_frame = gen_continue_frame(header_fileds=cl,flags=[],id=i)
-        continue_frame2 = gen_continue_frame(header_fileds=cl,flags=[],id=2)
-        continue_frame3 = gen_continue_frame(header_fileds=cl,flags=[],id=3)
-        continue_frame4 = gen_continue_frame(header_fileds=cl,flags=[],id=4)
-        continue_frame5 = gen_continue_frame(header_fileds=cl,flags=[],id=5)
-        continue_frame6 = gen_continue_frame(header_fileds=cl,flags=[],id=6)
-        continue_frame7 = gen_continue_frame(header_fileds=cl,flags=[],id=7)
-        continue_frame8 = gen_continue_frame(header_fileds=cl,flags=[],id=8)
-        continue_frame9 = gen_continue_frame(header_fileds=cl,flags=[],id=9)
-        continue_frame10 = gen_continue_frame(header_fileds=cl,flags=[],id=10)
-        continue_frame11 = gen_continue_frame(header_fileds=cl,flags=[],id=11)
-        continue_frame12 = gen_continue_frame(header_fileds=cl,flags=[],id=12)
-        continue_frame13 = gen_continue_frame(header_fileds=cl,flags=[],id=13)
-        continue_frame14 = gen_continue_frame(header_fileds=cl,flags=[],id=14)
-        continue_frame15 = gen_continue_frame(header_fileds=cl,flags=[],id=15)
-        continue_frame16 = gen_continue_frame(header_fileds=cl,flags=[],id=16)
-        continue_frame17 = gen_continue_frame(header_fileds=cl,flags=[],id=17)
-        continue_frame18 = gen_continue_frame(header_fileds=cl,flags=[],id=18)
-        continue_frameend = gen_continue_frame(header_fileds=cl,flags=["EH"],id=7)
-        data_frame = gen_data_frame(data='First data',flags=["ES"],id=i)
+        head_frame = gen_header_frame(method="POST", scheme="https", authority="chenpinji.freetls.fastly.net", path="/" ,flags=["ES","EH"], id=i, verbose=True)
+        #continue_frame = gen_continue_frame(header_fileds=cl,flags=[],id=i)
+        # continue_frame2 = gen_continue_frame(header_fileds=cl,flags=[],id=2)
+        # continue_frame3 = gen_continue_frame(header_fileds=cl,flags=[],id=3)
+        # continue_frame4 = gen_continue_frame(header_fileds=cl,flags=[],id=4)
+        # continue_frame5 = gen_continue_frame(header_fileds=cl,flags=[],id=5)
+        # continue_frame6 = gen_continue_frame(header_fileds=cl,flags=[],id=6)
+        # continue_frame7 = gen_continue_frame(header_fileds=cl,flags=[],id=7)
+        # continue_frame8 = gen_continue_frame(header_fileds=cl,flags=[],id=8)
+        # continue_frame9 = gen_continue_frame(header_fileds=cl,flags=[],id=9)
+        # continue_frame10 = gen_continue_frame(header_fileds=cl,flags=[],id=10)
+        # continue_frame11 = gen_continue_frame(header_fileds=cl,flags=[],id=11)
+        # continue_frame12 = gen_continue_frame(header_fileds=cl,flags=[],id=12)
+        # continue_frame13 = gen_continue_frame(header_fileds=cl,flags=[],id=13)
+        # continue_frame14 = gen_continue_frame(header_fileds=cl,flags=[],id=14)
+        # continue_frame15 = gen_continue_frame(header_fileds=cl,flags=[],id=15)
+        # continue_frame16 = gen_continue_frame(header_fileds=cl,flags=[],id=16)
+        # continue_frame17 = gen_continue_frame(header_fileds=cl,flags=[],id=17)
+        # continue_frame18 = gen_continue_frame(header_fileds=cl,flags=[],id=18)
+
+        #continue_frameend = gen_continue_frame(header_fileds=cl,flags=["EH"],id=i)
+        #data_frame = gen_data_frame(data='1',flags=["ES"],id=i)
+
         # head_frame2 = gen_header_frame(method="POST", scheme="https", authority="127.0.0.1", path="/" ,flags=[], id=i, verbose=True)
         # continue_frame2 = gen_continue_frame(header_fileds=cl,flags=["EH"],id=i)
         # data_frame2 = gen_data_frame(data='Second data',flags=["ES"],id=i)
-        req = gen_req(frames=[head_frame,continue_frame,
-                                continue_frameend,data_frame])
+        req = gen_req(frames=[head_frame])
         req_list.append(req)
+        i+=1
     return req_list
 
 
@@ -98,7 +100,7 @@ def gen_scheme_inject_req(prefix_list):
     i = 1
     req_list = []
     for prefix in prefix_list:
-        head_frame = gen_header_frame(method="GET", scheme=prefix, authority="127.0.0.1", path="/" ,flags=["ES", "EH"], id=i, verbose=True)
+        head_frame = gen_header_frame(method="GET", scheme=prefix, authority="chenpinji.freetls.fastly.net", path="/" ,flags=["ES", "EH"], id=i, verbose=True)
         i+=1
         req = gen_req(frames=[head_frame])
         req_list.append(req)

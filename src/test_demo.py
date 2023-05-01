@@ -3,6 +3,10 @@ from h2client import H2Client
 import time 
 import os
 import datetime
+# 导入对应库
+import ssl
+# 全局关闭ssl验证
+
 
 
     
@@ -47,7 +51,7 @@ def test(dn, port, attack_file_name,verbose=False):
     print("程序运行时间为：", elapsed_time)
 
 if __name__ == '__main__':
-
-    test(dn='127.0.0.1', port=80, attack_file_name='cl_attack_data.json',verbose=True)
+    #ssl._create_default_https_context = ssl._create_unverified_context
+    test(dn='chenpinji.freetls.fastly.net', port=443, attack_file_name='cl_attack_data.json',verbose=True)
     # test(dn='127.0.0.1', port=443, attack_file_name='te_attack_data.json')
 

@@ -20,18 +20,8 @@ def extract_type(frame_name):
 
 
 
-def extract_headers1(fileds_dict):
+def extract_headers1(fileds_dict):#register
     tblhdr = h2.HPackHdrTable()
-    dnt_name_str = h2.HPackLiteralString('cookie')
-    Padding = "1"*4058
-
-    dnt_val_str = h2.HPackLiteralString(Padding)
-    dnt_name = h2.HPackHdrString(data = dnt_name_str)
-    dnt_value = h2.HPackHdrString(data = dnt_val_str)
-    dnt_hdr = h2.HPackLitHdrFldWithIncrIndexing(
-    hdr_name = dnt_name,
-    hdr_value = dnt_value
-)
     headers_lst = []
     for key, value in fileds_dict.items():
         header_name = key
@@ -40,8 +30,73 @@ def extract_headers1(fileds_dict):
             hdr_name=h2.HPackHdrString(data=h2.HPackLiteralString(header_name)),
             hdr_value=h2.HPackHdrString(data=h2.HPackLiteralString(header_value))
         ))
-    headers_lst.append(dnt_hdr)
-    tblhdr.register(dnt_hdr)
+    for i in range(1):################################控制注入动态表的项数
+        dnt_name_str = h2.HPackLiteralString('a' + str(i))
+        Padding = str(i+1)*3000
+        dnt_val_str = h2.HPackLiteralString(Padding)
+        dnt_name = h2.HPackHdrString(data = dnt_name_str)
+        dnt_value = h2.HPackHdrString(data = dnt_val_str)
+        dnt_hdr = h2.HPackLitHdrFldWithIncrIndexing(
+        hdr_name = dnt_name,
+        hdr_value = dnt_value
+    )
+        headers_lst.append(dnt_hdr)
+        tblhdr.register(dnt_hdr)
+        for i in range(1):######################使用动态表的项数
+            https_hdr = h2.HPackIndexedHdr(index = 62+i)
+            for j in range(5):###############################引用每一项的次数
+                headers_lst.append(https_hdr)
+    return headers_lst
+#     dnt_name_str = h2.HPackLiteralString('a')
+#     Padding = "1"*800
+#     dnt_val_str = h2.HPackLiteralString(Padding)
+#     dnt_name = h2.HPackHdrString(data = dnt_name_str)
+#     dnt_value = h2.HPackHdrString(data = dnt_val_str)
+#     dnt_hdr = h2.HPackLitHdrFldWithIncrIndexing(
+#     hdr_name = dnt_name,
+#     hdr_value = dnt_value
+# )
+#     dnt_name_str2 = h2.HPackLiteralString('d2')
+#     Padding2 = "2"*800
+#     dnt_val_str2 = h2.HPackLiteralString(Padding2)
+#     dnt_name2 = h2.HPackHdrString(data = dnt_name_str2)
+#     dnt_value2 = h2.HPackHdrString(data = dnt_val_str2)
+#     dnt_hdr2 = h2.HPackLitHdrFldWithIncrIndexing(
+#     hdr_name = dnt_name2,
+#     hdr_value = dnt_value2
+# )
+
+    
+
+def extract_headers_addDynamic(fileds_dict):#动态表注入
+    headers_lst = []
+    # count = 1
+    # tblhdr = h2.HPackHdrTable()
+    for key, value in fileds_dict.items():
+            # get_hdr_idx = tblhdr.get_idx_by_name_and_value('dnt', '1'*3072)
+            # print(get_hdr_idx
+        header_name = key
+        header_value = value
+        headers_lst.append(h2.HPackLitHdrFldWithoutIndexing(
+            hdr_name=h2.HPackHdrString(data=h2.HPackLiteralString(header_name)),
+            hdr_value=h2.HPackHdrString(data=h2.HPackLiteralString(header_value))
+        ))
+    for i in range(1):######################使用动态表的项数
+        https_hdr = h2.HPackIndexedHdr(index = 62+i)
+        for j in range(5):###############################引用每一项的次数
+            headers_lst.append(https_hdr)
+        #headers_lst.append(https_hdr)
+        # headers_lst.append(https_hdr)
+        # headers_lst.append(https_hdr)
+        # https_hdr = h2.HPackIndexedHdr(index = 63)
+        # for j in range(8):
+        #     headers_lst.append(https_hdr)
+        # headers_lst.append(https_hdr)
+        # headers_lst.append(https_hdr)
+        # headers_lst.append(https_hdr)
+        # headers_lst.append(https_hdr)
+        # headers_lst.append(https_hdr)
+        # headers_lst.append(https_hdr)
     return headers_lst
 
 def extract_headers(fileds_dict):
@@ -69,10 +124,14 @@ def build_frame(fileds_dict, frame_type,stream_id):
                 cnt += 1
             else:
                 print("second in here")
-                headers_lst = extract_headers(fileds_dict)
+                headers_lst = extract_headers_addDynamic(fileds_dict)
             return h2.H2Frame(flags=flag_values, stream_id=id_value) / h2.H2HeadersFrame(hdrs=headers_lst)
         elif frame_type == 'continuation':
-            headers_lst = extract_headers(fileds_dict)
+            # if cnt == 2:
+            #     headers_lst = extract_headers(fileds_dict)
+            #     cnt+=1
+            # else:
+            headers_lst = extract_headers_addDynamic(fileds_dict)
             return h2.H2Frame(flags=flag_values, stream_id=id_value) / h2.H2ContinuationFrame(hdrs=headers_lst)
         elif frame_type == 'padded-headers':
             padding_payload = fileds_dict['padding']

@@ -3,50 +3,36 @@
 "<headers-frame-1>": {
 ":method": "POST",
 ":scheme": "https",
-":authority": "127.0.0.1",
+":authority": "chenpinji.freetls.fastly.net",
 ":path": "/?reqid=1",
-"flags": []
-},
-"<continuation-frame-1>": {
-"flags": [],
-"user-agent": "test\u00be"
-},
-"<continuation-frame-7>": {
 "flags": [
+"ES",
 "EH"
-],
-"user-agent": "test\u00be"
-},
-"<data-frame-1>": {
-"data": "First data",
-"flags": [
-"ES"
 ]
 }
 },
 "reqid_2": {
-    "<headers-frame-1>": {
-    ":method": "POST",
-    ":scheme": "https",
-    ":authority": "127.0.0.1",
-    ":path": "/?reqid=2",
-    "flags": []
-    },
-    "<continuation-frame-1>": {
-    "flags": [],
-    "user-agent": "test\u00be"
-    },
-    "<continuation-frame-7>": {
-    "flags": [
-    "EH"
-    ],
-    "user-agent": "test\u00be"
-    },
-    "<data-frame-1>": {
-    "data": "Second data",
-    "flags": [
-    "ES"
-    ]
-    }
-    }
+"<headers-frame-2>": {
+":method": "POST",
+":scheme": "https",
+":authority": "chenpinji.freetls.fastly.net",
+":path": "/?reqid=2",
+"flags": [
+"ES",
+"EH"
+]
+}
+},
+"reqid_3": {
+"<headers-frame-3>": {
+":method": "POST",
+":scheme": "https",
+":authority": "chenpinji.freetls.fastly.net",
+":path": "/?reqid=3",
+"flags": [
+"ES",
+"EH"
+]
+}
+}
 }

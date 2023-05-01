@@ -1,4 +1,4 @@
-
+import string
 # * content-length插入unicode(0x1-0x21)
 def gen_cl1():
     cl1 = []
@@ -88,7 +88,100 @@ def gen_cl2():
     return cl2
 def gen_cl3():
     cl3 = []
-    cl3.append(["user-agent","test\u00be"])
+    for i in range(3): ###########决定了请求的数量
+    #     temp = []
+    #     temp.append([str(i),"h\u00be"])
+    #     for word in string.ascii_lowercase:
+    #         for num in range(1):
+    #             temp.append([word+str(num),"h\u00be"])
+
+        # cl3.append([["date","1234"]])
+        cl3.append([["a","a"]])#["c","h\u00be"]])
+                    # ["d","h\u00be"],["e","h\u00be"],
+                    # ["f","h\u00be"],["g","h\u00be"],
+                    # ["h","h\u00be"],["i","h\u00be"]])
+                    # ["j","h\u00be"],["k","h\u00be"],
+                    # ["l","h\u00be"],["m","h\u00be"],
+                    # ["n","h\u00be"],["o","h\u00be"],
+                    # ["p","h\u00be"],["q","h\u00be"]])
+                    # ["r","h\u00be"],["s","h\u00be"]])
+        #             ["t","h\u00be"],["u","h\u00be"],
+        #             ["v","h\u00be"],["w","h\u00be"],
+        #             ["x","h\u00be"],["y","h\u00be"],
+        #             ["x","h\u00be"],["y","h\u00be"],
+        #             ["z","h\u00be"],["a1","h\u00be"],
+        #             ["a2","h\u00be"],["a3","h\u00be"],
+        #             ["a4","h\u00be"],["a5","h\u00be"],
+        #             ["a6","h\u00be"],["a7","h\u00be"],
+        #             ["a8","h\u00be"],["a9","h\u00be"],
+        #             ["b1","h\u00be"],["b2","h\u00be"],
+        #             ["b3","h\u00be"],["b4","h\u00be"],
+        #             ["b5","h\u00be"],["b6","h\u00be"],
+        #             ["b7","h\u00be"],["b8","h\u00be"],
+        #             ["b9","h\u00be"],["c1","h\u00be"],
+        #             ["c2","h\u00be"],["c3","h\u00be"],
+        #             ["c4","h\u00be"],["c5","h\u00be"],
+        #             ["c6","h\u00be"],["c7","h\u00be"],
+        #             ["c8","h\u00be"],["c9","h\u00be"],
+        #             ["d1","h\u00be"],["d2","h\u00be"],
+        #             ["d3","h\u00be"],["d4","h\u00be"],
+        #             ["d5","h\u00be"],["d6","h\u00be"],
+        #             ["d7","h\u00be"],["d8","h\u00be"],
+        #             ["d9","h\u00be"],["e1","h\u00be"],
+        #             ["e2","h\u00be"],["e3","h\u00be"],
+        #             ["e4","h\u00be"],["e5","h\u00be"],
+        #             ["e6","h\u00be"],["e7","h\u00be"],
+        #             ["e8","h\u00be"],["e9","h\u00be"],
+        #             ["f1","h\u00be"],["f2","h\u00be"],
+        #             ["f3","h\u00be"],["f4","h\u00be"],
+        #             ["f5","h\u00be"],["f6","h\u00be"],
+        #             ["f7","h\u00be"],["f8","h\u00be"],
+        #             ["f9","h\u00be"],["g1","h\u00be"],
+        #             ["g2","h\u00be"],["g3","h\u00be"],
+        #             ["g4","h\u00be"],["g5","h\u00be"],
+        #             ["g6","h\u00be"],["g7","h\u00be"],
+        #             ["g8","h\u00be"],["g9","h\u00be"],
+        #             ["h1","h\u00be"],["h2","h\u00be"],
+        #             ["h3","h\u00be"],["h4","h\u00be"],
+        #             ["h5","h\u00be"],["h6","h\u00be"],
+        #             ["h7","h\u00be"],["h8","h\u00be"],
+        #             ["h9","h\u00be"],["i1","h\u00be"],
+        #             ["i2","h\u00be"],["i3","h\u00be"],
+        #             ["i4","h\u00be"],["i5","h\u00be"],
+        #             ["i6","h\u00be"],["i7","h\u00be"],
+        #             ["i8","h\u00be"],["i9","h\u00be"],
+        #             ["j1","h\u00be"],["j2","h\u00be"],
+        #             ["j3","h\u00be"],["j4","h\u00be"],
+        #             ["j5","h\u00be"],["j6","h\u00be"],
+        #             ["j7","h\u00be"],["j8","h\u00be"],
+        #             ["j9","h\u00be"],["k1","h\u00be"],
+        #             ["k2","h\u00be"],["k3","h\u00be"],
+        #             ["k4","h\u00be"],["k5","h\u00be"],
+        #             ["k6","h\u00be"],["k7","h\u00be"],
+        #             ["k8","h\u00be"],["k9","h\u00be"],
+        #             ["l1","h\u00be"],["l2","h\u00be"],
+        #             ["l3","h\u00be"],["l4","h\u00be"],
+        #             ["l5","h\u00be"],["l6","h\u00be"],
+        #             ["l7","h\u00be"],["l8","h\u00be"],
+        #             ["j9","h\u00be"],["k1","h\u00be"],
+        #             ["k2","h\u00be"],["k3","h\u00be"],
+        #             ["k4","h\u00be"],["k5","h\u00be"],
+        #             ["k6","h\u00be"],["k7","h\u00be"],
+        #             ["k8","h\u00be"],["k9","h\u00be"],
+        #             ["l1","h\u00be"],["l2","h\u00be"],
+        #             ["l3","h\u00be"],["l4","h\u00be"],
+        #             ["l5","h\u00be"],["l6","h\u00be"],
+        #             ["l7","h\u00be"],["l8","h\u00be"],
+        #             ["l9","h\u00be"],["m1","h\u00be"],
+        #             ["m2","h\u00be"],["m3","h\u00be"],
+        #             ["m4","h\u00be"],["m5","h\u00be"],
+        #             ["m6","h\u00be"],["m7","h\u00be"],
+        #             ["m8","h\u00be"],["m9","h\u00be"],
+        #             ["n1","h\u00be"],["n2","h\u00be"],
+        #             ["n3","h\u00be"],["n4","h\u00be"],
+        #             ["n5","h\u00be"],["n6","h\u00be"],
+        #             ["n7","h\u00be"],["n8","h\u00be"]
+        #             ])
     # cl3.append(["user-agent","test\u00be"])
     # cl3.append(["user-agent","test\u00be"])
     # cl3.append(["user-agent","test\u00be"])
